@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrandName</title>
+    <link rel="icon" type="image/svg+xml" href="brandname-favicon.svg">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #0d1b2a;
+            --light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 100;
+            background: rgba(13, 27, 42, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+       /* Keresősáv stílusa */
+.search-container {
+    position: relative;
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.search-container:focus-within {
+    width: 250px;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px rgba(255, 0, 110, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0 40px 0 15px;
+    color: var(--light);
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.search-container:focus-within .search-input {
+    opacity: 1;
+}
+
+.search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light);
+    z-index: 2;
+    transition: transform 0.3s;
+}
+
+.search-container:focus-within .search-button {
+    background: var(--accent);
+    border-radius: 50%;
+    transform: scale(0.8);
+}
+
+.search-results {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    width: 250px;
+    background: rgba(13, 27, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    z-index: 101;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-container:focus-within .search-results,
+.search-results:hover {
+    max-height: 300px;
+    padding: 10px 0;
+}
+
+.search-result-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.search-result-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+}
+        /* Lapozható header */
+        .slider-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s ease;
+        }
+        
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero {
+            text-align: center;
+            z-index: 1;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            color: rgba(248, 249, 250, 0.8);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(58, 134, 255, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(58, 134, 255, 0.4);
+        }
+        
+        /* Slider controls */
+        .slider-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--accent);
+            transform: scale(1.2);
+        }
+        
+        .slider-arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        
+        .slider-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(13, 27, 42, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--light);
+            font-size: 24px;
+        }
+        
+        .slider-arrow:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .features {
+            padding: 100px 0;
+            background-color: #121e2d;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--light);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .feature-card p {
+            color: rgba(248, 249, 250, 0.7);
+            line-height: 1.6;
+        }
+        
+        .portfolio {
+            padding: 100px 0;
+            background-color: var(--dark);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(58, 134, 255, 0.8), rgba(131, 56, 236, 0.8));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-overlay h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .portfolio-overlay p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .testimonials {
+            padding: 100px 0;
+            background-color: #121e2d;
+        }
+        
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .testimonial-container::before {
+            content: '"';
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            font-size: 100px;
+            color: var(--accent);
+            opacity: 0.3;
+        }
+        
+        .testimonial-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: var(--light);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+        
+        .author-info p {
+            color: rgba(248, 249, 250, 0.7);
+        }
+        
+        footer {
+            background-color: #0a1522;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-column h3 {
+            color: var(--light);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: rgba(248, 249, 250, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(248, 249, 250, 0.5);
+        }
+        
+        /* Animated background */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+        }
+        
+        .circle1 {
+            top: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            animation: float 8s infinite alternate;
+        }
+        
+        .circle2 {
+            bottom: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: var(--secondary);
+            animation: float 10s infinite alternate-reverse;
+        }
+        
+        .circle3 {
+            top: 40%;
+            left: 25%;
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            animation: float 12s infinite alternate;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .search-container {
+                margin-left: 0;
+                margin-top: 15px;
+                width: 100%;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .slider-arrows {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">BrandName</a>
+            <div class="nav-links">
+                <a href="#home">Kezdőlap</a>
+                <a href="#features">Funkciók</a>
+                <a href="#portfolio">Portfólió</a>
+                <a href="#testimonials">Vélemények</a>
+                <a href="#contact">Kapcsolat</a>
+                
+              <!-- Keresősáv -->
+<div class="search-container">
+    <input type="text" class="search-input" placeholder="Keresés..." id="searchInput">
+    <button class="search-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </button>
+    <div class="search-results" id="searchResults">
+        <!-- A keresési találatok ide kerülnek -->
+    </div>
+</div>
+            </div>
+        </div>
+    </nav>
+    
+    <header id="home">
+        <div class="slider-container">
+            <div class="slides" id="slides">
+                <!-- Első slide -->
+                <div class="slide">
+                    <div class="animated-bg">
+                        <div class="bg-circle circle1"></div>
+                        <div class="bg-circle circle2"></div>
+                        <div class="bg-circle circle3"></div>
+                    </div>
+                    <div class="hero">
+                        <h1>Innovatív Megoldások a Jövőért</h1>
+                        <p>Lélegzetelállító weboldalunk a legmodernebb technológiákkal és elképesztő dizájnnal garantálja, hogy vállalkozása kiemelkedjen a versenytársak közül.</p>
+                        <a href="#contact" class="cta-button">Kezdjük el a projektet</a>
+                    </div>
+                </div>
+                
+                <!-- Második slide -->
+                <div class="slide">
+                    <div class="animated-bg">
+                        <div class="bg-circle circle1" style="background: var(--secondary)"></div>
+                        <div class="bg-circle circle2" style="background: var(--accent)"></div>
+                        <div class="bg-circle circle3" style="background: var(--primary)"></div>
+                    </div>
+                    <div class="hero">
+                        <h1>Professzionális Webfejlesztés</h1>
+                        <p>Testre szabott megoldásokat kínálunk, amelyek tökéletesen illeszkednek az Ön üzleti igényeihez és céljaihoz.</p>
+                        <a href="#portfolio" class="cta-button">Nézze meg portfóliónkat</a>
+                    </div>
+                </div>
+                
+                <!-- Harmadik slide -->
+                <div class="slide">
+                    <div class="animated-bg">
+                        <div class="bg-circle circle1" style="background: var(--accent)"></div>
+                        <div class="bg-circle circle2" style="background: var(--primary)"></div>
+                        <div class="bg-circle circle3" style="background: var(--secondary)"></div>
+                    </div>
+                    <div class="hero">
+                        <h1>Díjnyertes UI/UX Dizájn</h1>
+                        <p>A felhasználói élmény középpontba helyezésével olyan weboldalakat alkotunk, amelyek nemcsak gyönyörűek, hanem rendkívül könnyen használhatóak is.</p>
+                        <a href="#testimonials" class="cta-button">Ügyfeleink véleménye</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slider vezérlők -->
+            <div class="slider-controls">
+                <div class="slider-dot active" data-slide="0"></div>
+                <div class="slider-dot" data-slide="1"></div>
+                <div class="slider-dot" data-slide="2"></div>
+            </div>
+            
+            <div class="slider-arrows">
+                <div class="slider-arrow prev">❮</div>
+                <div class="slider-arrow next">❯</div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Kiemelkedő funkciók</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Villámgyors Betöltés</h3>
+                    <p>Optimalizált kód és a legújabb technológiák biztosítják, hogy weboldalad akár 0.5 másodperc alatt betöltődjön.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>SEO Optimalizáció</h3>
+                    <p>Fejlett keresőoptimalizálási technikák, amelyek garantálják, hogy vállalkozásod a keresési találatok élén jelenjen meg.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Reszponzív Dizájn</h3>
+                    <p>Tökéletes megjelenés minden eszközön, a mobiltelefonoktól a nagy képernyős monitorokig.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Fejlett Biztonság</h3>
+                    <p>SSL titkosítás és a legújabb biztonsági protokollok védik az adatokat és a felhasználókat.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Többnyelvű Támogatás</h3>
+                    <p>Automatikus nyelvi felismerés és fordítás, hogy globális közönséget érhess el.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Egyedi Admin Felület</h3>
+                    <p>Könnyen kezelhető felület a tartalom frissítéséhez, nincs szükség programozói ismeretekre.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Lélegzetelállító projektek</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="Projekt 1">
+                    <div class="portfolio-overlay">
+                        <h3>Luxus Ingatlan Weboldal</h3>
+                        <p>3D vizualizáció és interaktív alaprajzok</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="Projekt 2">
+                    <div class="portfolio-overlay">
+                        <h3>E-kereskedelmi Platform</h3>
+                        <p>Fejlett fizetési rendszer és termékmegjelenítés</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="Projekt 3">
+                    <div class="portfolio-overlay">
+                        <h3>Éttermi Rendelési Rendszer</h3>
+                        <p>Valós idejű foglalások és online fizetés</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="Projekt 4">
+                    <div class="portfolio-overlay">
+                        <h3>Fitness Alkalmazás</h3>
+                        <p>Személyre szabott edzéstervek és nyomkövetés</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="Projekt 5">
+                    <div class="portfolio-overlay">
+                        <h3>Utazási Blog</h3>
+                        <p>Interaktív térképek és videó tartalmak</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="Projekt 6">
+                    <div class="portfolio-overlay">
+                        <h3>Vállalati Weboldal</h3>
+                        <p>Professzionális megjelenés és ügyfélmenedzsment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Ügyfeleink mondták</h2>
+            <div class="testimonial-container">
+                <p class="testimonial-text">Az új weboldalunk elkészülte óta az online megrendeléseink 200%-kal növekedtek. A dizájn lenyűgöző, a funkcionalitás pedig pontosan az, amire szükségünk volt. Legjobb befektetés volt, amit valaha tettünk!</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <img src="/api/placeholder/120/120" alt="Ügyfél Fotó">
+                    </div>
+                    <div class="author-info">
+                        <h4>Kovács Péter</h4>
+                        <p>Vezérigazgató, Tech Innovations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Rólunk</h3>
+                    <p>Modern, díjnyertes weboldalak és egyedi fejlesztések a digitális jelenlét maximalizálásáért.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Szolgáltatások</h3>
+                    <ul>
+                        <li><a href="#">Webfejlesztés</a></li>
+                        <li><a href="#">UI/UX Tervezés</a></li>
+                        <li><a href="#">E-kereskedelem</a></li>
+                        <li><a href="#">SEO Optimalizálás</a></li>
+                        <li><a href="#">Mobilalkalmazások</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Hasznos linkek</h3>
+                    <ul>
+                        <li><a href="#">GYIK</a></li>
+                        <li><a href="#">Támogatás</a></li>
+                        <li><a href="#">Adatvédelem</a></li>
+                        <li><a href="#">Feltételek</a></li>
+                        <li><a href="#">Karrier</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kapcsolat</h3>
+                    <ul>
+                        <li>Email: info@example.com</li>
+                        <li>Telefon: +36 1 234 5678</li>
+                        <li>Cím: Budapest, Példa utca 123.</li>
+                    </ul>
+                    <!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Közösségi Média Ikonok</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Alap CSS a közösségi média ikonokhoz */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+        }
+        .social-links a {
+            text-decoration: none;
+            font-size: 30px;
+        }
+        /* Alapértelmezett ikon színek */
+        .fa-twitter {
+            color: #1da1f2; /* Twitter kék */
+        }
+        .fa-facebook-f {
+            color: #1877f2; /* Facebook kék */
+        }
+        .fa-instagram {
+            color: #e4405f; /* Instagram pirosas */
+        }
+        .fa-linkedin-in {
+            color: #0077b5; /* LinkedIn kék */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="social-links">
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+
+</body>
+</html>
+
+                    
+                    
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 BrandName. Minden jog fenntartva.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    
+    // Slider funkció
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.getElementById('slides');
+        const dots = document.querySelectorAll('.slider-dot');
+        const prevArrow = document.querySelector('.slider-arrow.prev');
+        const nextArrow = document.querySelector('.slider-arrow.next');
+        let currentSlide = 0;
+        const totalSlides = document.querySelectorAll('.slide').length;
+        
+        // Automatikus váltás időzítő változója
+        let slideInterval;
+        
+        // Slider pozíciójának beállítása
+        function goToSlide(n) {
+            slides.style.transform = `translateX(-${n * 100}%)`;
+            
+            // Aktív dot frissítése
+            dots.forEach((dot, index) => {
+                if (index === n) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            
+            currentSlide = n;
+        }
+        
+        // Következő slide-ra lépés
+        function nextSlide() {
+            if (currentSlide >= totalSlides - 1) {
+                goToSlide(0);
+            } else {
+                goToSlide(currentSlide + 1);
+            }
+        }
+        
+        // Előző slide-ra lépés
+        function prevSlide() {
+            if (currentSlide <= 0) {
+                goToSlide(totalSlides - 1);
+            } else {
+                goToSlide(currentSlide - 1);
+            }
+        }
+        
+        // Automatikus váltás indítása
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+        
+        // Automatikus váltás leállítása
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+        
+        // Event listener-ek hozzáadása
+        prevArrow.addEventListener('click', () => {
+            prevSlide();
+            stopSlideShow();
+            startSlideShow();
+        });
+        
+        nextArrow.addEventListener('click', () => {
+            nextSlide();
+            stopSlideShow();
+            startSlideShow();
+        });
+        
+        // Dot-okra kattintással slide váltás
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+                stopSlideShow();
+                startSlideShow();
+            });
+        });
+        
+        // Érintés kezelése mobil eszközökön
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        slides.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopSlideShow();
+        }, false);
+        
+        slides.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            startSlideShow();
+        }, false);
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide(); // Balra swipe
+            } else if (touchEndX > touchStartX + 50) {
+                prevSlide(); // Jobbra swipe
+            }
+        }
+        
+        // Automatikus slide show indítása
+        startSlideShow();
+        
+      // Keresési funkció implementálása
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const searchContainer = document.querySelector('.search-container');
+const searchButton = document.querySelector('.search-button');
+
+// Minta keresési adatok (ezt később adatbázisból vagy API-ból tölthetjük be)
+const searchData = [
+    { title: 'Webfejlesztés', url: '#features' },
+    { title: 'UI/UX Tervezés', url: '#features' },
+    { title: 'E-kereskedelem', url: '#portfolio' },
+    { title: 'SEO Optimalizálás', url: '#features' },
+    { title: 'Mobilalkalmazások', url: '#portfolio' },
+    { title: 'Luxus Ingatlan Weboldal', url: '#portfolio' },
+    { title: 'E-kereskedelmi Platform', url: '#portfolio' },
+    { title: 'Éttermi Rendelési Rendszer', url: '#portfolio' },
+    { title: 'Fitness Alkalmazás', url: '#portfolio' },
+    { title: 'Utazási Blog', url: '#portfolio' },
+    { title: 'Vállalati Weboldal', url: '#portfolio' },
+    { title: 'Kapcsolat', url: '#contact' }
+];
+
+// Keresési eredmények megjelenítése
+function displaySearchResults(query) {
+    // Töröljük a korábbi találatokat
+    searchResults.innerHTML = '';
+    
+    if (query.length < 2) {
+        return; // Csak 2 karakternél hosszabb keresésekre reagál
+    }
+    
+    // Keresés az adatokban
+    const filteredResults = searchData.filter(item => 
+        item.title.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    // Eredmények megjelenítése
+    if (filteredResults.length > 0) {
+        filteredResults.forEach(result => {
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('search-result-item');
+            resultItem.textContent = result.title;
+            
+            // Kattintási esemény
+            resultItem.addEventListener('click', () => {
+                window.location.href = result.url;
+                searchInput.value = ''; // Töröljük a keresőmezőt
+                searchResults.innerHTML = ''; // Töröljük az eredményeket
+                searchInput.blur(); // Elveszítjük a fókuszt
+            });
+            
+            searchResults.appendChild(resultItem);
+        });
+    } else {
+        const noResult = document.createElement('div');
+        noResult.classList.add('search-result-item');
+        noResult.textContent = 'Nincs találat';
+        searchResults.appendChild(noResult);
+    }
+}
+
+// Keresési esemény figyelése
+searchInput.addEventListener('input', () => {
+    displaySearchResults(searchInput.value);
+});
+
+// Keresési gomb kattintás
+searchButton.addEventListener('click', (e) => {
+    if (!searchContainer.classList.contains('active')) {
+        e.preventDefault();
+        searchInput.focus();
+    } else if (searchInput.value.trim() !== '') {
+        // Itt implementálhatod a globális keresést
+        displaySearchResults(searchInput.value);
+    }
+});
+
+// Klikk a dokumentumra bezárja az eredményeket, ha nem a keresőn van a fókusz
+document.addEventListener('click', (e) => {
+    if (!searchContainer.contains(e.target) && searchInput !== document.activeElement) {
+        searchResults.innerHTML = '';
+    }
+});
+        
+        // Kiegészítés: lapozható header lefelé (egymás alatti lapok)
+        const headerSections = document.querySelectorAll('header, section, footer');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        // Simított görgetés a megfelelő szekcióhoz
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 80, // 80px offset a fixed navbar miatt
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Aktív menüpont kiemelése görgetés közben
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            headerSections.forEach(section => {
+                if (!section.id) return;
+                
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // "Vissza az oldal tetejére" gomb
+        const scrollTopBtn = document.createElement('div');
+        scrollTopBtn.classList.add('scroll-top-btn');
+        scrollTopBtn.innerHTML = '↑';
+        document.body.appendChild(scrollTopBtn);
+        
+        // Gomb stílusának hozzáadása
+        const style = document.createElement('style');
+        style.textContent = `
+            .scroll-top-btn {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                width: 50px;
+                height: 50px;
+                background-color: var(--accent);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                font-size: 24px;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.3s, transform 0.3s;
+                z-index: 99;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+            
+            .scroll-top-btn.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .nav-links a.active::after {
+                width: 100%;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Gomb megjelenítése/elrejtése görgetéskor
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        
+        // Kattintás a gombra
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Betöltési animáció
+    window.addEventListener('load', function() {
+        const loader = document.createElement('div');
+        loader.classList.add('page-loader');
+        loader.innerHTML = `
+            <div class="loader-spinner"></div>
+            <div class="loader-text">BrandName</div>
+        `;
+        document.body.appendChild(loader);
+        
+        // Betöltési animáció stílusa
+        const loaderStyle = document.createElement('style');
+        loaderStyle.textContent = `
+            .page-loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: var(--dark);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                transition: opacity 0.5s;
+            }
+            
+            .loader-spinner {
+                width: 50px;
+                height: 50px;
+                border: 3px solid rgba(255,255,255,0.1);
+                border-radius: 50%;
+                border-top-color: var(--accent);
+                animation: spin 1s linear infinite;
+                margin-bottom: 15px;
+            }
+            
+            .loader-text {
+                color: var(--accent);
+                font-size: 24px;
+                font-weight: bold;
+                letter-spacing: 2px;
+            }
+            
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(loaderStyle);
+        
+        // Eltüntetjük a betöltési animációt
+        setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.remove();
+            }, 500);
+        }, 800);
+    });
+</script>
